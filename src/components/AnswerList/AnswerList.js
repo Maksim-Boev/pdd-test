@@ -3,7 +3,7 @@ import Answer from "../Answer";
 import {connect} from 'react-redux';
 import {getTicket} from "../service/service";
 
-const AnswerList = ({quiz, count}) => {
+const AnswerList = ({ count}) => {
 	const [que, setQue] = useState()
 
 	const question = typeof que === "object" && que[count].que_title

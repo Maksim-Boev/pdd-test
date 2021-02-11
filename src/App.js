@@ -7,7 +7,6 @@ import AnswerList from "./components/AnswerList";
 import QuizResults from "./components/QuizResults";
 import Timer from "./components/Timer";
 import Drawer from "./components/Drawer";
-import quiz from "./components/quiz/quiz";
 
 const Container = styled.div`
   display: flex;
@@ -52,8 +51,8 @@ const App = ({count}) => {
 					Ответьте на вопрос
 				</Title>
 				<QuizTable>
-					{count < 10 && <Question quiz={quiz}/>}
-					{count < 10 && <AnswerList quiz={quiz}/>}
+					{count < 10 && <Question/>}
+					{count < 10 && <AnswerList/>}
 					{count >= 10 && <QuizResults/>}
 				</QuizTable>
 			</Container>

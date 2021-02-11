@@ -18,7 +18,7 @@ const CounterQuestionStyle = styled.div`
 min-width: 40px;
 `
 
-const Question = ({quiz, count}) => {
+const Question = ({count}) => {
 
 	const [que, setQue] = useState([])
 
