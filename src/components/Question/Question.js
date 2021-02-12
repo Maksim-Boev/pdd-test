@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React , {useState , useEffect} from 'react'
 import styled from "styled-components";
 import {connect} from 'react-redux';
 import {getTicket} from "../service/service";
 
 const QuestionUl = styled.div`
-	display: flex;
-	justify-content: space-between;
+		display: flex;
+		justify-content: space-between;
 `
 
 const DivStyle = styled.div`
@@ -15,36 +15,31 @@ const DivStyle = styled.div`
 `
 
 const CounterQuestionStyle = styled.div`
-min-width: 40px;
+		min-width: 60px;
+    display: flex;
+    justify-content: flex-end;
 `
 
-const Question = ({count}) => {
+const Question = ({count , data}) => {
 
-	const [que, setQue] = useState([])
+	const question = data.map(({que_title}) => que_title)
+	const urlImg = data.map(({urlImg}) => urlImg)
 
-	useEffect(() => {
-		getTicket()
-			.then((data) => {
-				console.log(data[0])
-				setQue(data[0].questions)
-			})
-	}, [])
-
-	const question = que.map(({que_title}) => que_title)
-	const urlImg = que.map(({urlImg}) => urlImg)
+	console.log(question)
 
 	return (
 		<QuestionUl>
 			<DivStyle>
-				{urlImg[count] !== undefined && urlImg[count].length !== 0 && <img style={{'width': '100%'}} src={urlImg[count]} alt="img"/>}
+				{urlImg[count] !== undefined && urlImg[count].length !== 0 &&
+				<img style={{'width': '100%'}} src={urlImg[count]} alt="img"/>}
 				{question[count]}
 			</DivStyle>
 			<CounterQuestionStyle>
 				{
-					count < que.length
+					count < data.length
 						? count + 1
-						: que.length
-				} из {que.length}
+						: data.length
+				} из {data.length}
 			</CounterQuestionStyle>
 		</QuestionUl>
 	);

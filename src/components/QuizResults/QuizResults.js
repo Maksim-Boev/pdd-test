@@ -6,18 +6,18 @@ import * as actions from "../actions/actions";
 
 
 const ListStyle = styled.li`
-list-style: none;
+	list-style: none;
 `
 const IconStyle = styled.i`
-margin-left: 10px;
-${({result}) => {
+	margin-left: 10px;
+	${({result}) => {
 	if (result != null) {
 		return result ? 'color: green' : 'color: red'
 	}
 }}
 `
 
-const QuizResults = ({resultQuestion, resetResult}) => {
+const QuizResults = ({resultQuestion , resetResult}) => {
 
 	const counterTrueQuestion = () => {
 		let count = 0
@@ -30,7 +30,7 @@ const QuizResults = ({resultQuestion, resetResult}) => {
 		return count
 	}
 
-	const result = resultQuestion.map(({id, question, result}) => {
+	const result = resultQuestion.map(({id , question , result}) => {
 
 		return (
 			<ListStyle
@@ -65,10 +65,10 @@ const mapStateToProps = ({resultQuestion}) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-	const {resetResult} = bindActionCreators(actions, dispatch)
+	const {resetResult} = bindActionCreators(actions , dispatch)
 	return {
 		resetResult
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(QuizResults);
+export default connect(mapStateToProps , mapDispatchToProps)(QuizResults);

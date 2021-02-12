@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React , {useEffect , useState} from 'react';
 
 const Timer = () => {
 
-	const [state, setState] = useState(1200)
+	const [state , setState] = useState(1200)
 
 	useEffect(() => {
 		const dec = () => {
 			setState(state - 1)
 		}
 		let timer = () => {
-			setTimeout(dec, 1000)
+			setTimeout(dec , 1000)
 		}
 		if (state === 0) {
 			return
@@ -18,7 +18,7 @@ const Timer = () => {
 		return () => {
 			clearTimeout(timer);
 		}
-	}, [state])
+	} , [state])
 
 	let sec = state % 60 < 10 ? `0${state % 60}` : state % 60
 	let minute = Math.floor(state / 60)

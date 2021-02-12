@@ -1,4 +1,4 @@
-import React, {useState,} from 'react'
+import React , {useState ,} from 'react'
 import styled from "styled-components";
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
@@ -25,23 +25,23 @@ transition: background .3s ease-in-out;
 `
 
 const Answer = ({
-									question, idQuestion, answer,
-									id, rightAnswer, inc, count,
-									lengthQuiz, correctAnswer, wrongAnswer
-}) => {
+									question , idQuestion , answer ,
+									id , rightAnswer , inc , count ,
+									lengthQuiz , correctAnswer , wrongAnswer
+								}) => {
 
-	let [markerAnswer, setMarkerAnswer] = useState('')
+	let [markerAnswer , setMarkerAnswer] = useState('')
 
 	const rightAns = rightAnswer === id
 	const timeoutResetMarkerAnswer = (t) => {
 		setTimeout(() => {
 			setMarkerAnswer('')
 			count <= lengthQuiz && inc()
-		}, t)
+		} , t)
 	}
 
 	const QuestionFromResult = {
-		idQuestion,
+		idQuestion ,
 		question
 	}
 
@@ -83,13 +83,13 @@ const mapStateToProps = ({count}) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-	const {inc, correctAnswer, resetResult, wrongAnswer} = bindActionCreators(actions, dispatch)
+	const {inc , correctAnswer , resetResult , wrongAnswer} = bindActionCreators(actions , dispatch)
 	return {
-		inc,
-		correctAnswer,
-		wrongAnswer,
+		inc ,
+		correctAnswer ,
+		wrongAnswer ,
 		resetResult
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Answer);
+export default connect(mapStateToProps , mapDispatchToProps)(Answer);

@@ -1,38 +1,29 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import Answer from "../Answer";
 import {connect} from 'react-redux';
-import {getTicket} from "../service/service";
 
-const AnswerList = ({ count}) => {
-	const [que, setQue] = useState()
+const AnswerList = ({count , data}) => {
 
-	const question = typeof que === "object" && que[count].que_title
-	const idQuestion = typeof que === "object" && que[count].idQuestion
-	const rightAnswer = typeof que === "object" && que[count].rightAnswer
+	const dataWithCount = data.length !== 0 && data[count]
 
-	useEffect(() => {
-		getTicket()
-			.then((data) => {
-				console.log(data[0])
-				setQue(data[0].questions)
-			})
-	}, [])
+	const question = dataWithCount.que_title
+	const idQuestion = dataWithCount.idQuestion
+	const rightAnswer = dataWithCount.rightAnswer
+	const que_answers = dataWithCount.que_answers
 
-		let answer = typeof que === "object" && que[count].que_answers.map(({answer, id,}) => {
+	let answer = que_answers && que_answers.map(({answer , id}) => {
 
-			return (
-				<Answer
-					id={id}
-					idQuestion={idQuestion}
-					key={id}
-					lengthQuiz={que.length}
-					question={question}
-					answer={answer}
-					rightAnswer={rightAnswer}/>
-			)
-		})
-
-
+		return (
+			<Answer
+				id={id}
+				idQuestion={idQuestion}
+				key={id}
+				lengthQuiz={data.length}
+				question={question}
+				answer={answer}
+				rightAnswer={rightAnswer}/>
+		)
+	})
 
 
 	return (
@@ -42,9 +33,9 @@ const AnswerList = ({ count}) => {
 	)
 }
 
-const mapStateToProps = ({count, resultQuestion}) => {
+const mapStateToProps = ({count , resultQuestion}) => {
 	return {
-		count,
+		count ,
 		resultQuestion
 	}
 }

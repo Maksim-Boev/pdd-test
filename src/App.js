@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React , {useState , useEffect} from 'react'
 import {connect} from 'react-redux'
 import styled from "styled-components"
 
@@ -7,6 +7,7 @@ import AnswerList from "./components/AnswerList";
 import QuizResults from "./components/QuizResults";
 import Timer from "./components/Timer";
 import Drawer from "./components/Drawer";
+import {getTicket} from "./components/service/service";
 
 const Container = styled.div`
   display: flex;
@@ -19,6 +20,7 @@ const Container = styled.div`
     `
 
 const Title = styled.h1`
+	margin-top: 50px;
 	color: #fff;
 `
 
@@ -31,28 +33,46 @@ const QuizTable = styled.ul`
 	color: #fff;
 `
 
-
 const App = ({count}) => {
 
-	const [toggle, setToggle] = useState(false)
+	const [toggle , setToggle] = useState(false)
+	const [ticket , setTicket] = useState(0)
+	const [que , setQue] = useState([])
 
 	const onToggle = () => {
 		setToggle(!toggle)
 	}
+
+	useEffect(() => {
+		getTicket()
+			.then((data) => {
+				setQue(data[ticket].questions)
+			})
+		return setQue([])
+	} , [ticket])
+
+	console.log(que)
+
+	const updateTicket = (value) => {
+		setTicket(value)
+	}
+
+	console.log(ticket)
 
 	return (
 		<React.Fragment>
 			<Container>
 				<Drawer
 					onToggle={onToggle}
-					isOpen={toggle}/>
+					isOpen={toggle}
+					updateTicket={updateTicket}/>
 				<Title>
 					<Timer/>
 					Ответьте на вопрос
 				</Title>
 				<QuizTable>
-					{count < 10 && <Question/>}
-					{count < 10 && <AnswerList/>}
+					{count < 10 && <Question data={que}/>}
+					{count < 10 && <AnswerList data={que}/>}
 					{count >= 10 && <QuizResults/>}
 				</QuizTable>
 			</Container>
