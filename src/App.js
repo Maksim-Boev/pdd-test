@@ -38,6 +38,8 @@ const App = ({count}) => {
 	const [toggle , setToggle] = useState(false)
 	const [ticket , setTicket] = useState(0)
 	const [que , setQue] = useState([])
+	const [start , setStart] = useState(false)
+	const [dataLength , setDataLength] = useState([])
 
 	const onToggle = () => {
 		setToggle(!toggle)
@@ -46,18 +48,28 @@ const App = ({count}) => {
 	useEffect(() => {
 		getTicket()
 			.then((data) => {
+				data.forEach((item , index) => {
+					setDataLength(dataLength => [...dataLength , index])
+				})
+			})
+	} , [])
+
+	useEffect(() => {
+		getTicket()
+			.then((data) => {
 				setQue(data[ticket].questions)
 			})
 		return setQue([])
-	} , [ticket])
-
-	console.log(que)
+	} , [])
+	//},[ticket]) -> повтор Console.log
 
 	const updateTicket = (value) => {
 		setTicket(value)
 	}
 
 	console.log(ticket)
+	console.log(dataLength)
+	console.log('App')
 
 	return (
 		<React.Fragment>
@@ -65,16 +77,30 @@ const App = ({count}) => {
 				<Drawer
 					onToggle={onToggle}
 					isOpen={toggle}
-					updateTicket={updateTicket}/>
-				<Title>
-					<Timer/>
-					Ответьте на вопрос
-				</Title>
-				<QuizTable>
-					{count < 10 && <Question data={que}/>}
-					{count < 10 && <AnswerList data={que}/>}
-					{count >= 10 && <QuizResults/>}
-				</QuizTable>
+					updateTicket={updateTicket}
+					dataLength={dataLength}/>
+
+				<button onClick={() => {
+					setStart(!start)
+				}}>Старт
+				</button>
+
+				{
+					start
+						? <React.Fragment>
+							<Title>
+								<Timer/>
+								Ответьте на вопрос
+							</Title>
+							<QuizTable>
+								{count < 10 && <Question data={que}/>}
+								{count < 10 && <AnswerList data={que}/>}
+								{count >= 10 && <QuizResults/>}
+							</QuizTable>
+						</React.Fragment>
+						: <h1>Выберите билет</h1>
+				}
+
 			</Container>
 		</React.Fragment>
 	);

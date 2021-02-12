@@ -1,7 +1,6 @@
-import React , {useState , useEffect} from 'react'
+import React from 'react'
 import styled from "styled-components";
 import {connect} from 'react-redux';
-import {getTicket} from "../service/service";
 
 const QuestionUl = styled.div`
 		display: flex;
@@ -24,8 +23,6 @@ const Question = ({count , data}) => {
 
 	const question = data.map(({que_title}) => que_title)
 	const urlImg = data.map(({urlImg}) => urlImg)
-
-	console.log(question)
 
 	return (
 		<QuestionUl>

@@ -1,7 +1,8 @@
-import React , {useState} from 'react';
+import React , {useState , useEffect} from 'react';
 import styled from 'styled-components'
 import MenuToggle from "../MenuToggle";
 import Backdrop from "../Backdrop";
+import TicketItem from "../TicketItem";
 
 const UlStyle = styled.ul`
 	padding: 0;
@@ -17,31 +18,27 @@ const UlStyle = styled.ul`
 	z-index: 1
 `
 
-const LiStyle = styled.li`
-	list-style: none;
-	margin-top: 10px;
-	margin-left: 20px;
-`
-
-const Drawer = ({isOpen , onToggle , updateTicket}) => {
-	const links = [1 , 2 , 3]
+const Drawer = ({isOpen , onToggle , updateTicket , dataLength}) => {
 
 	const [ticket , setTicket] = useState(0)
 
-	updateTicket(ticket)
+	useEffect(() => {
+		updateTicket(ticket)
+	} , [ticket])
+	//},[ticket, updateTicket]) -> повтор Console.log
 
 	const link =
-		links.map((link , index) => {
-			const onClick = () => {
+		dataLength.map((link , index) => {
+			const onUpdate = () => {
+				console.log('onUpdate!!!!!!!!!!!!!!!!')
 				setTicket(index)
 			}
 			return (
-				<LiStyle
+				<TicketItem
 					key={index}
-					onClick={onClick}
-				>
-					Ticket {link}
-				</LiStyle>
+					index={index}
+					onUpdate={onUpdate}
+				/>
 			)
 		})
 
