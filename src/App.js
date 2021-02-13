@@ -8,6 +8,7 @@ import QuizResults from "./components/QuizResults";
 import Timer from "./components/Timer";
 import Drawer from "./components/Drawer";
 import {getTicket} from "./components/service/service";
+import StartBtn from "./components/StartBtn";
 
 const Container = styled.div`
   display: flex;
@@ -36,7 +37,7 @@ const QuizTable = styled.ul`
 const App = ({count}) => {
 
 	const [toggle , setToggle] = useState(false)
-	const [ticket , setTicket] = useState(0)
+	const [ticket , setTicket] = useState(null)
 	const [que , setQue] = useState([])
 	const [start , setStart] = useState(false)
 	const [dataLength , setDataLength] = useState([])
@@ -55,21 +56,23 @@ const App = ({count}) => {
 	} , [])
 
 	useEffect(() => {
+		ticket != null &&
 		getTicket()
 			.then((data) => {
 				setQue(data[ticket].questions)
 			})
 		return setQue([])
-	} , [])
+	} , [ticket])
 	//},[ticket]) -> повтор Console.log
 
 	const updateTicket = (value) => {
 		setTicket(value)
 	}
 
-	console.log(ticket)
-	console.log(dataLength)
 	console.log('App')
+	console.log(ticket)
+	console.log(que)
+
 
 	return (
 		<React.Fragment>
@@ -80,13 +83,14 @@ const App = ({count}) => {
 					updateTicket={updateTicket}
 					dataLength={dataLength}/>
 
-				<button onClick={() => {
-					setStart(!start)
-				}}>Старт
-				</button>
+				<StartBtn
+					ticket={ticket}
+					start={start}
+					onClick={() => (setStart(!start))}
+				/>
 
 				{
-					start
+					start && ticket != null
 						? <React.Fragment>
 							<Title>
 								<Timer/>

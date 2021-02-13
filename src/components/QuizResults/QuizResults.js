@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState , useEffect} from 'react';
 import styled from "styled-components";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
@@ -9,7 +9,9 @@ const ListStyle = styled.li`
 `
 const IconStyle = styled.i`
 	margin-left: 10px;
-	${({result}) => {return result ? 'color: green' : 'color: red'}}
+	${({result}) => {
+	return result ? 'color: green' : 'color: red'
+}}
 `
 
 const QuizResults = ({resultQuestion , resetResult}) => {
@@ -25,8 +27,17 @@ const QuizResults = ({resultQuestion , resetResult}) => {
 		return count
 	}
 
-	const result = resultQuestion.map(({id , question , result}) => {
+	const [wrongAns , setWrongAns] = useState(0)
 
+	useEffect(() => {
+		resultQuestion.forEach(({result}) => {
+			result === false && setWrongAns(wrongAns=>wrongAns +1)
+		})
+	} , [])
+
+	console.log(wrongAns)
+
+	const result = resultQuestion.map(({id , question , result}) => {
 		return (
 			<ListStyle
 				key={id}
@@ -41,6 +52,8 @@ const QuizResults = ({resultQuestion , resetResult}) => {
 
 	return (
 		<div>
+			{wrongAns > 2 && <h1>Вы не прошли тест</h1>}
+			<br/>
 			<ul style={{'padding': '0'}}>
 				{result}
 			</ul>

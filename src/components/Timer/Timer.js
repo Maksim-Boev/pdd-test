@@ -2,7 +2,7 @@ import React , {useEffect , useState} from 'react';
 
 const Timer = () => {
 
-	const [state , setState] = useState(1200)
+	const [state , setState] = useState(600)
 
 	useEffect(() => {
 		const dec = () => {

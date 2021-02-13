@@ -1,6 +1,6 @@
 export const initialState = {
 	count: 0 ,
-	ticket: 0 ,
+	ticket: null ,
 	resultQuestion: []
 }
 
@@ -40,11 +40,6 @@ const reducer = (state = initialState , action) => {
 			return {
 				count: 0 ,
 				resultQuestion: []
-			}
-		case 'TICKET' :
-			return {
-				...state ,
-				ticket: action.payload.ticket
 			}
 		default:
 			return state
