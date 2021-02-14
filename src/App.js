@@ -9,6 +9,8 @@ import Timer from "./components/Timer";
 import Drawer from "./components/Drawer";
 import {getTicket} from "./components/service/service";
 import StartBtn from "./components/StartBtn";
+import {bindActionCreators} from "redux";
+import * as actions from "./components/actions/actions";
 
 const Container = styled.div`
   display: flex;
@@ -34,7 +36,7 @@ const QuizTable = styled.ul`
 	color: #fff;
 `
 
-const App = ({count}) => {
+const App = ({count, resetResult}) => {
 
 	//const [toggle , setToggle] = useState(false)
 	const [ticket , setTicket] = useState(null)
@@ -71,6 +73,11 @@ const App = ({count}) => {
 		setTicket(value)
 	}
 
+	const onStart = () => {
+		setStart(!start)
+		resetResult()
+	}
+
 	console.log('App')
 	console.log(ticket)
 	console.log(que)
@@ -87,7 +94,7 @@ const App = ({count}) => {
 				<StartBtn
 					ticket={ticket}
 					start={start}
-					onClick={() => (setStart(!start))}
+					onClick={onStart}
 				/>
 
 				{
@@ -117,4 +124,11 @@ const mapStateToProps = ({count}) => {
 	}
 }
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => {
+	const {resetResult} = bindActionCreators(actions , dispatch)
+	return {
+		resetResult
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -52,7 +52,7 @@ const QuizResults = ({resultQuestion , resetResult}) => {
 
 	return (
 		<div>
-			{wrongAns > 2 && <h1>Вы не прошли тест</h1>}
+			{wrongAns > 2 ? <h1>Вы не прошли тест</h1> : <h1>Поздравляем, вы прошли тест</h1>}
 			<br/>
 			<ul style={{'padding': '0'}}>
 				{result}
