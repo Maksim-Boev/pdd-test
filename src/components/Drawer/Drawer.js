@@ -18,15 +18,19 @@ const UlStyle = styled.ul`
 	z-index: 1
 `
 
-const Drawer = ({isOpen , onToggle , updateTicket , dataLength}) => {
+const Drawer = ({updateTicket , dataLength}) => {
 
 	const [ticket , setTicket] = useState(null)
 	const [idActive , setIdActive] = useState(null)
+	const [toggle , setToggle] = useState(false)
 
 	useEffect(() => {
 		updateTicket(ticket)
 	} , [ticket])
-	//},[ticket, updateTicket]) -> повтор Console.log
+
+	const onToggle = () => {
+		setToggle(!toggle)
+	}
 
 	const isActive = (idActive = null , index) => {
 		return idActive === index;
@@ -56,12 +60,12 @@ const Drawer = ({isOpen , onToggle , updateTicket , dataLength}) => {
 			<div>
 				<MenuToggle
 					onToggle={onToggle}
-					isOpen={isOpen}/>
-				<UlStyle open={isOpen}>
+					isOpen={toggle}/>
+				<UlStyle open={toggle}>
 					{link}
 				</UlStyle>
 			</div>
-			{isOpen && <Backdrop onClose={onToggle}/>}
+			{toggle && <Backdrop onClose={onToggle}/>}
 		</React.Fragment>
 	);
 };

@@ -36,23 +36,27 @@ const QuizTable = styled.ul`
 
 const App = ({count}) => {
 
-	const [toggle , setToggle] = useState(false)
+	//const [toggle , setToggle] = useState(false)
 	const [ticket , setTicket] = useState(null)
 	const [que , setQue] = useState([])
 	const [start , setStart] = useState(false)
 	const [dataLength , setDataLength] = useState([])
 
-	const onToggle = () => {
-		setToggle(!toggle)
-	}
+	// const onToggle = () => {
+	// 	setToggle(!toggle)
+	// }
 
 	useEffect(() => {
-		getTicket()
-			.then((data) => {
-				data.forEach((item , index) => {
-					setDataLength(dataLength => [...dataLength , index])
+		let count = [];
+		(async function ()  {
+			await getTicket()
+				.then((data) => {
+					data.forEach((item , index) => {
+						count.push(index)
+					})
 				})
-			})
+			setDataLength(dataLength => [...dataLength , ...count])
+		})()
 	} , [])
 
 	useEffect(() => {
@@ -61,9 +65,7 @@ const App = ({count}) => {
 			.then((data) => {
 				setQue(data[ticket].questions)
 			})
-		return setQue([])
 	} , [ticket])
-	//},[ticket]) -> повтор Console.log
 
 	const updateTicket = (value) => {
 		setTicket(value)
@@ -73,13 +75,12 @@ const App = ({count}) => {
 	console.log(ticket)
 	console.log(que)
 
-
 	return (
 		<React.Fragment>
 			<Container>
 				<Drawer
-					onToggle={onToggle}
-					isOpen={toggle}
+					// onToggle={onToggle}
+					// isOpen={toggle}
 					updateTicket={updateTicket}
 					dataLength={dataLength}/>
 
@@ -93,7 +94,7 @@ const App = ({count}) => {
 					start && ticket != null
 						? <React.Fragment>
 							<Title>
-								<Timer/>
+								{count < 10 && <Timer/>}
 								Ответьте на вопрос
 							</Title>
 							<QuizTable>
