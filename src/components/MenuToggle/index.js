@@ -1,3 +1,3 @@
-import MenuToggle from "./MenuToggle";
+import MenuToggle from './MenuToggle';
 
-export default MenuToggle
+export default MenuToggle;

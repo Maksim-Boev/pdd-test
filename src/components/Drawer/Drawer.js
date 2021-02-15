@@ -1,59 +1,56 @@
-import React , {useState , useEffect } from 'react';
-import MenuToggle from "../MenuToggle";
-import Backdrop from "../Backdrop";
-import TicketItem from "../TicketItem";
-import UlStyle from "./StyledComponents";
+import React, { useState, useEffect } from 'react';
+import MenuToggle from '../MenuToggle';
+import Backdrop from '../Backdrop';
+import TicketItem from '../TicketItem';
+import UlStyle from './StyledComponents';
 
-const Drawer = ({updateTicket , dataLength}) => {
+const Drawer = ({ updateTicket, dataLength }) => {
+  const [ticket, setTicket] = useState(null);
+  const [idActive, setIdActive] = useState(null);
+  const [toggle, setToggle] = useState(false);
 
-	const [ticket , setTicket] = useState(null)
-	const [idActive , setIdActive] = useState(null)
-	const [toggle , setToggle] = useState(false)
+  useEffect(() => {
+    updateTicket(ticket);
+  }, [ticket]);
 
-	useEffect(() => {
-		updateTicket(ticket)
-	} , [ticket])
+  const onToggle = () => {
+    setToggle(!toggle);
+  };
 
-	const onToggle = () => {
-		setToggle(!toggle)
-	}
+  // eslint-disable-next-line no-shadow
+  const isActive = (idActive = null, index) => {
+    return idActive === index;
+  };
 
-	const isActive = (idActive = null , index) => {
-		return idActive === index;
-	}
+  // eslint-disable-next-line no-shadow
+  const link = dataLength.map((link, index) => {
+    const id = index;
+    const onActive = () => {
+      setIdActive(index);
+    };
+    const onUpdate = () => {
+      setTicket(index);
+    };
+    return (
+      <TicketItem
+        active={isActive(idActive, index)}
+        key={id}
+        index={index}
+        onUpdate={onUpdate}
+        onActive={onActive}
+      />
+    );
+  });
 
-	const link =
-		dataLength.map((link , index) => {
-			const onActive = () => {
-				setIdActive(index)
-			}
-			const onUpdate = () => {
-				setTicket(index)
-			}
-			return (
-				<TicketItem
-					active={isActive(idActive , index)}
-					key={index}
-					index={index}
-					onUpdate={onUpdate}
-					onActive={onActive}
-				/>
-			)
-		})
-
-	return (
-		<React.Fragment>
-			<div>
-				<MenuToggle
-					onToggle={onToggle}
-					isOpen={toggle}/>
-				<UlStyle open={toggle}>
-					{link}
-				</UlStyle>
-			</div>
-			{toggle && <Backdrop onClose={onToggle}/>}
-		</React.Fragment>
-	);
+  return (
+    <>
+      <div>
+        <MenuToggle onToggle={onToggle} isOpen={toggle} />
+        <UlStyle open={toggle}>{link}</UlStyle>
+      </div>
+      {toggle && <Backdrop onClose={onToggle} />}
+    </>
+  );
 };
 
 export default Drawer;

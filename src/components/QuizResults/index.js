@@ -1,3 +1,3 @@
-import QuizResults from "./QuizResults"
+import QuizResults from './QuizResults';
 
-export default QuizResults
+export default QuizResults;

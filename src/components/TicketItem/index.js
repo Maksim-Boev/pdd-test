@@ -1,3 +1,3 @@
-import TicketItem from "./TicketItem";
+import TicketItem from './TicketItem';
 
-export default TicketItem
+export default TicketItem;

@@ -1,3 +1,3 @@
-import AnswerList from "./AnswerList";
+import AnswerList from './AnswerList';
 
-export default AnswerList
+export default AnswerList;
