@@ -1,23 +1,6 @@
 import React from 'react'
-import styled from "styled-components";
 import {connect} from 'react-redux';
-
-const QuestionUl = styled.div`
-		display: flex;
-		justify-content: space-between;
-`
-
-const DivStyle = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-
-const CounterQuestionStyle = styled.div`
-		min-width: 60px;
-    display: flex;
-    justify-content: flex-end;
-`
+import {QuestionUl , CounterQuestionStyle , DivStyle , QuestionStyle} from "./StyledComponents";
 
 const Question = ({count , data}) => {
 
@@ -29,7 +12,9 @@ const Question = ({count , data}) => {
 			<DivStyle>
 				{urlImg[count] !== undefined && urlImg[count].length !== 0 &&
 				<img style={{'width': '100%'}} src={urlImg[count]} alt="img"/>}
-				{question[count]}
+				<QuestionStyle>
+					{question[count]}
+				</QuestionStyle>
 			</DivStyle>
 			<CounterQuestionStyle>
 				{

@@ -1,18 +1,8 @@
 import React , {useState , useEffect} from 'react';
-import styled from "styled-components";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import * as actions from "../actions/actions";
-
-const ListStyle = styled.li`
-	list-style: none;
-`
-const IconStyle = styled.i`
-	margin-left: 10px;
-	${({result}) => {
-	return result ? 'color: green' : 'color: red'
-}}
-`
+import {IconStyle , ListStyle} from "./StyledComponents";
 
 const QuizResults = ({resultQuestion , resetResult}) => {
 

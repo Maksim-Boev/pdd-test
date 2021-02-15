@@ -1,42 +1,18 @@
 import React , {useState , useEffect} from 'react'
 import {connect} from 'react-redux'
-import styled from "styled-components"
 
-import Question from "./components/Question";
-import AnswerList from "./components/AnswerList";
-import QuizResults from "./components/QuizResults";
-import Timer from "./components/Timer";
-import Drawer from "./components/Drawer";
-import {getTicket} from "./components/service/service";
-import StartBtn from "./components/StartBtn";
+import Question from "../components/Question";
+import AnswerList from "../components/AnswerList";
+import QuizResults from "../components/QuizResults";
+import Timer from "../components/Timer";
+import Drawer from "../components/Drawer";
+import {getTicket} from "../components/service/service";
+import StartBtn from "../components/StartBtn";
 import {bindActionCreators} from "redux";
-import * as actions from "./components/actions/actions";
+import * as actions from "../components/actions/actions";
+import {Container , QuizTable , Title} from "./StyledComponents";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  width: 100%;
-  background: linear-gradient(90deg, #5041d2 0%, #7969e6 100%);
-  height: 100vh;
-	padding: 0 100px;
-    `
-
-const Title = styled.h1`
-	margin-top: 50px;
-	color: #fff;
-`
-
-const QuizTable = styled.ul`
-	display: flex;
-	flex-direction: column;
-	padding: 20px;
-	border: 2px solid;
-	border-radius: 5px;
-	color: #fff;
-`
-
-const App = ({count, resetResult}) => {
+const App = ({count , resetResult}) => {
 
 	//const [toggle , setToggle] = useState(false)
 	const [ticket , setTicket] = useState(null)
@@ -50,7 +26,7 @@ const App = ({count, resetResult}) => {
 
 	useEffect(() => {
 		let count = [];
-		(async function ()  {
+		(async function () {
 			await getTicket()
 				.then((data) => {
 					data.forEach((item , index) => {
@@ -102,7 +78,7 @@ const App = ({count, resetResult}) => {
 						? <React.Fragment>
 							<Title>
 								{count < 10 && <Timer/>}
-								Ответьте на вопрос
+								{count >= 10 ? 'Ваш результат' : 'Ответьте на вопрос'}
 							</Title>
 							<QuizTable>
 								{count < 10 && <Question data={que}/>}
@@ -131,4 +107,4 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps , mapDispatchToProps)(App);

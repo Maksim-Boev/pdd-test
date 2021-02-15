@@ -1,18 +1,14 @@
 import React from 'react';
-import styled from 'styled-components'
-
-const BtnStyle = styled.button`
-    height: 40px;
-`
+import StartBtnStyle from "./StyledComponents";
 
 const StartBtn = ({start = false , onClick , ticket}) => {
 	return (
 		ticket === null
 			? <React.Fragment/>
-			: <BtnStyle
+			: <StartBtnStyle
 				onClick={onClick}>
 				{start ? 'End test' : 'Start test'}
-			</BtnStyle>
+			</StartBtnStyle>
 	);
 };
 

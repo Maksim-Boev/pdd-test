@@ -1,22 +1,8 @@
 import React , {useState , useEffect } from 'react';
-import styled from 'styled-components'
 import MenuToggle from "../MenuToggle";
 import Backdrop from "../Backdrop";
 import TicketItem from "../TicketItem";
-
-const UlStyle = styled.ul`
-	padding: 0;
-	margin: 0;
-	${({open}) => {
-	return open ? 'left: 0' : 'left: -300px'
-}};
-	transition: left .22s ease-in;
-	position: fixed;
-	background-color: #fff;
-	height: 100%;
-	width: 300px;
-	z-index: 1
-`
+import UlStyle from "./StyledComponents";
 
 const Drawer = ({updateTicket , dataLength}) => {
 
