@@ -20,7 +20,6 @@ const AnswerList = ({count , data}) => {
 
 	let answer = que_answers && que_answers.map(({answer , id}) => {
 
-
 		return (
 			<Answer
 				id={id}
@@ -34,7 +33,6 @@ const AnswerList = ({count , data}) => {
 				pressing={noPressing}/>
 		)
 	})
-
 
 	return (
 		<React.Fragment>

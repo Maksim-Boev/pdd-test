@@ -32,12 +32,12 @@ const Answer = ({
 			if (rightAns) {
 				setMarkerAnswer(true)
 				correctAnswer(QuestionFromResult)
-				timeoutResetMarkerAnswer(5000)
+				timeoutResetMarkerAnswer(1000)
 				clearTimeout(timeoutResetMarkerAnswer)
 			} else {
 				setMarkerAnswer(false)
 				wrongAnswer(QuestionFromResult)
-				timeoutResetMarkerAnswer(5000)
+				timeoutResetMarkerAnswer(1000)
 				clearTimeout(timeoutResetMarkerAnswer)
 			}
 		}
