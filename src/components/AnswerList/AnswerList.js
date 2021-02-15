@@ -1,4 +1,4 @@
-import React from 'react'
+import React , {useState} from 'react'
 import Answer from "../Answer";
 import {connect} from 'react-redux';
 
@@ -11,7 +11,15 @@ const AnswerList = ({count , data}) => {
 	const rightAnswer = dataWithCount.rightAnswer
 	const que_answers = dataWithCount.que_answers
 
+	const [noPressing , setNoPressing] = useState(false)
+
+	const onPressing = (value) => {
+		console.log('onPressing')
+		setNoPressing(value)
+	}
+
 	let answer = que_answers && que_answers.map(({answer , id}) => {
+
 
 		return (
 			<Answer
@@ -21,7 +29,9 @@ const AnswerList = ({count , data}) => {
 				lengthQuiz={data.length}
 				question={question}
 				answer={answer}
-				rightAnswer={rightAnswer}/>
+				rightAnswer={rightAnswer}
+				onPressing={onPressing}
+				pressing={noPressing}/>
 		)
 	})
 

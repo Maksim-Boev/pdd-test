@@ -7,7 +7,7 @@ import LiStyle from "./StyledComponent";
 const Answer = ({
 									question , idQuestion , answer ,
 									id , rightAnswer , inc , count ,
-									lengthQuiz , correctAnswer , wrongAnswer
+									lengthQuiz , correctAnswer , wrongAnswer , onPressing , pressing
 								}) => {
 
 	let [markerAnswer , setMarkerAnswer] = useState('')
@@ -15,6 +15,7 @@ const Answer = ({
 	const rightAns = rightAnswer === id
 	const timeoutResetMarkerAnswer = (t) => {
 		setTimeout(() => {
+			onPressing(false)
 			setMarkerAnswer('')
 			count <= lengthQuiz && inc()
 		} , t)
@@ -26,22 +27,19 @@ const Answer = ({
 	}
 
 	const onAnswerClick = () => {
-		if (rightAns) {
-			if (markerAnswer || markerAnswer === false) {
-				return
+		onPressing(true)
+		if (pressing === false) {
+			if (rightAns) {
+				setMarkerAnswer(true)
+				correctAnswer(QuestionFromResult)
+				timeoutResetMarkerAnswer(5000)
+				clearTimeout(timeoutResetMarkerAnswer)
+			} else {
+				setMarkerAnswer(false)
+				wrongAnswer(QuestionFromResult)
+				timeoutResetMarkerAnswer(5000)
+				clearTimeout(timeoutResetMarkerAnswer)
 			}
-			setMarkerAnswer(true)
-			correctAnswer(QuestionFromResult)
-			timeoutResetMarkerAnswer(1000)
-			clearTimeout(timeoutResetMarkerAnswer)
-		} else {
-			if (markerAnswer || markerAnswer === false) {
-				return
-			}
-			setMarkerAnswer(false)
-			wrongAnswer(QuestionFromResult)
-			timeoutResetMarkerAnswer(1000)
-			clearTimeout(timeoutResetMarkerAnswer)
 		}
 	}
 
@@ -63,12 +61,11 @@ const mapStateToProps = ({count}) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-	const {inc , correctAnswer , resetResult , wrongAnswer} = bindActionCreators(actions , dispatch)
+	const {inc , correctAnswer , wrongAnswer} = bindActionCreators(actions , dispatch)
 	return {
 		inc ,
 		correctAnswer ,
-		wrongAnswer ,
-		resetResult
+		wrongAnswer
 	}
 }
 
