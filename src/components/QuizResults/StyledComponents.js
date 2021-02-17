@@ -6,7 +6,16 @@ export const ListStyle = styled.li`
 `;
 export const IconStyle = styled.i`
   margin-left: 10px;
-  ${({ result }) => {
-    return result ? 'color: green' : 'color: red';
-  }}
+  ${({ result }) => (result ? 'color: green' : 'color: red')}
+`;
+
+export const Button = styled.button`
+  display: flex;
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-top: 15px;
+`;
+
+export const Report = styled.ul`
+  padding: 0;
 `;

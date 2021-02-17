@@ -1,30 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Button, IconStyle, ListStyle, Report } from './StyledComponents';
 
-import { IconStyle, ListStyle } from './StyledComponents';
+const QuizResults = ({ results }) => {
+  const getRightAnswersCount = () => {
+    let rightAnswersCount = 0;
+    results.forEach(
+      (res) => res.answerId === res.rightAnswer && rightAnswersCount++
+    );
+    return rightAnswersCount;
+  };
 
-const QuizResults = ({ result }) => {
+  const getFailedAnswersCount = () => results.length - getRightAnswersCount();
+
+  const checkAnswer = (ansId, rightAnsId) => ansId === rightAnsId;
+
+  const resetResult = () => window.location.reload();
+
   return (
     <div>
-      {/*{wrongAns > 2 ? (*/}
-      {/*  <h1>Вы не прошли тест</h1>*/}
-      {/*) : (*/}
-      {/*  <h1>Поздравляем, вы прошли тест</h1>*/}
-      {/*)}*/}
+      {getFailedAnswersCount() > 2 ? (
+        <h1>
+          Вы не прошли тест (Процент ошибок:{' '}
+          {(getFailedAnswersCount() / results.length) * 100}%)
+        </h1>
+      ) : (
+        <h1>
+          Поздравляем, вы прошли тест (Процент ошибок:{' '}
+          {(getFailedAnswersCount() / results.length) * 100}%)
+        </h1>
+      )}
       <br />
-      <ul style={{ padding: '0' }}>
-        {result.map(({ questionId, answerId, rightAnswer, answerText }) => (
-          <ListStyle key={questionId}>
-            {questionId}. {answerText}
-            <IconStyle
-              result={+result}
-              className={result ? 'fa fa-check' : 'fa fa-times'}
-            />
-          </ListStyle>
-        ))}
-      </ul>
-      <p>{/*Правильно {counterTrueQuestion()} из {resultQuestion.length}*/}</p>
-      {/* eslint-disable-next-line react/button-has-type */}
-      {/*<button onClick={resetResult}>Повторить</button>*/}
+      <Report>
+        {results
+          .sort((a, b) => a.questionId - b.questionId) // Сортировка массива по айдишникам
+          .map(({ questionId, answerId, rightAnswer, answerText }) => (
+            <ListStyle key={questionId}>
+              {questionId}. {answerText}
+              <IconStyle
+                result={checkAnswer(answerId, rightAnswer)}
+                className={
+                  checkAnswer(answerId, rightAnswer)
+                    ? 'fa fa-check'
+                    : 'fa fa-times'
+                }
+              />
+            </ListStyle>
+          ))}
+      </Report>
+      <h1>
+        Правильно: {getRightAnswersCount()} из {results.length}
+      </h1>
+      <Button onClick={resetResult}>Повторить</Button>
     </div>
   );
 };

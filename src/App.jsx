@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import Question from './components/Question';
 import QuizResults from './components/QuizResults';
 import Timer from './components/Timer';
@@ -40,8 +39,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (userAnswers.length === ticket.length) {
-      setStart(false);
+    if (userAnswers.length === ticket.length && userAnswers.length !== 0) {
       setIsPoolEnded(true);
     }
   }, [userAnswers]);
@@ -63,7 +61,7 @@ const App = () => {
     setUserAnswers(answers);
     setCurrentQuestionIndex(currentQuestionIndex + 1);
   };
-  console.log(isPoolEnded);
+
   return (
     <>
       <Container>
@@ -81,17 +79,16 @@ const App = () => {
           : isTicketsShown && <p>loading...</p>}
         {!start && <StartBtn disabled={!question} onClick={onStart} />}
 
-        {start && !!ticket && !isTicketsShown ? (
+        {start && !!ticket && !isTicketsShown && (
           <>
             <Title>
-              {start && <Timer />}
-              {!start ? 'Ваш результат' : 'Ответьте на вопрос'}
+              {start && !isPoolEnded && <Timer />}
+              {!start ? 'Ваш результат' : !isPoolEnded && 'Ответьте на вопрос'}
             </Title>
-
             <QuizTable>
-              {start && (
+              {start && !isPoolEnded && (
                 <CounterQuestionStyle>
-                  {start && userAnswers.length + 1} из {ticket.length}
+                  {userAnswers.length + 1} из {ticket.length}
                 </CounterQuestionStyle>
               )}
               {start &&
@@ -102,11 +99,9 @@ const App = () => {
                     )
                 )}
 
-              {isPoolEnded && <QuizResults result={userAnswers} />}
+              {isPoolEnded && <QuizResults results={userAnswers} />}
             </QuizTable>
           </>
-        ) : (
-          <p />
         )}
       </Container>
     </>

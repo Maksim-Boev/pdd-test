@@ -9,10 +9,12 @@ export const Header = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 auto;
 `;
 
-export const Title = styled.p`
+export const Title = styled.h1`
   margin: 10px 0;
+  text-align: center;
 `;
 
 export const Image = styled.img`
@@ -24,4 +26,5 @@ export const Container = styled.div`
   justify-content: space-between;
   flex-direction: column;
   height: 100%;
+  max-width: 500px;
 `;
