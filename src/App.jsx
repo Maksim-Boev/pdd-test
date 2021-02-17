@@ -23,7 +23,6 @@ const App = () => {
       const count = [];
       data.forEach((item, index) => {
         count.push(index);
-        console.log(count);
       });
       setDataLength(count);
     });
