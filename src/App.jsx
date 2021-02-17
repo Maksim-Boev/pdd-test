@@ -13,7 +13,7 @@ const App = () => {
   const [questionsData, setQuestionsData] = useState([]);
   const [isTicketsShown, setIsTicketsShown] = useState(true);
   const [ticket, setTicket] = useState(null);
-  const [question, setQuestion] = useState([]);
+  const [question, setQuestion] = useState(null);
   const [start, setStart] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(null);
 
@@ -31,6 +31,7 @@ const App = () => {
           questions: item.questions,
         });
       });
+
       setQuestionsData(tempData);
     });
   }, []);
@@ -55,9 +56,9 @@ const App = () => {
   };
 
   // eslint-disable-next-line camelcase
-  const questions = question.map(({ que_title }) => que_title);
+  // const questions = question.map(({ que_title }) => que_title);
 
-  const allQuestions = questions.length;
+  // const allQuestions = questions.length;
 
   const userResponse = (response) => {
     setResultQuestion((prevState) => [
@@ -79,45 +80,47 @@ const App = () => {
     setNumQuestion(0);
   };
 
-  const showResult = numQuestion >= question.length && question.length !== 0;
-  const showQuestion = numQuestion < question.length;
+  // const showResult = numQuestion >= question.length && question.length !== 0;
+  // const showQuestion = numQuestion < question.length;
 
   const onTicketChoose = (ticketData) => {
     setTicket(ticketData);
+    setQuestion(ticketData.questions[0]); // TODO set in map
     setIsTicketsShown(false);
   };
+
+  console.log(start);
   return (
     <>
       <Container>
         {isTicketsShown && <h1>Выберите билет</h1>}
-        {isTicketsShown &&
-          questionsData.length &&
-          questionsData.map((el) => (
-            <h2 onClick={() => onTicketChoose(el)} key={el.id.toString()}>
-              Ticket {el.id}
-            </h2>
-          ))}
+        {isTicketsShown && questionsData.length
+          ? questionsData.map((el) => (
+              <h2 onClick={() => onTicketChoose(el)} key={el.id.toString()}>
+                Ticket {el.id}
+              </h2>
+            ))
+          : isTicketsShown && <p>loading...</p>}
         {!!ticket && <StartBtn start={start} onClick={onStart} />}
 
         {start && !!ticket && !isTicketsShown ? (
           <>
             <Title>
-              {showQuestion && <Timer />}
-              {/*{showResult ? 'Ваш результат' : 'Ответьте на вопрос'}*/}
+              {start && <Timer />}
+              {!start ? 'Ваш результат' : 'Ответьте на вопрос'}
             </Title>
 
             <QuizTable>
               {start && (
                 <CounterQuestionStyle>
-                  {showQuestion ? numQuestion + 1 : numQuestion} из{' '}
-                  {allQuestions}
+                  {start && question.idQuestion} из {ticket.questions.length}
                 </CounterQuestionStyle>
               )}
-              {showQuestion && (
+              {start && (
                 <Question
                   data={question}
-                  userResponse={userResponse}
-                  updateNumberQue={updateNumberQue}
+                  // userResponse={userResponse}
+                  // updateNumberQue={updateNumberQue}
                 />
               )}
 
