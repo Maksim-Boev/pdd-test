@@ -21,15 +21,6 @@ const App = () => {
   useEffect(() => {
     // eslint-disable-next-line no-shadow
     const count = [];
-    // (async function getLength() {
-    //   await getTicket().then((data) => {
-    //     data.forEach((item, index) => {
-    //       count.push(index);
-    //     });
-    //   });
-    //   // eslint-disable-next-line no-shadow
-    //   setDataLength((dataLength) => [...dataLength, ...count]);
-    // })();
     const length = async () => {
       await getTicket().then((data) => {
         data.forEach((item, index) => {
