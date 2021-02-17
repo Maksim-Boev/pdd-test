@@ -11,7 +11,7 @@ import { CounterQuestionStyle } from './components/Question/StyledComponents';
 
 const App = () => {
   const [ticket, setTicket] = useState(null);
-  const [que, setQue] = useState([]);
+  const [question, setQuestion] = useState([]);
   const [start, setStart] = useState(false);
   const [dataLength, setDataLength] = useState([]);
   // eslint-disable-next-line no-unused-vars
@@ -19,27 +19,23 @@ const App = () => {
   const [resultQuestion, setResultQuestion] = useState([]);
 
   useEffect(() => {
-    // eslint-disable-next-line no-shadow
-    const count = [];
-    const length = async () => {
-      await getTicket().then((data) => {
-        data.forEach((item, index) => {
-          count.push(index);
-        });
+    getTicket().then((data) => {
+      const count = [];
+      data.forEach((item, index) => {
+        count.push(index);
+        console.log(count);
       });
-      // eslint-disable-next-line no-shadow
-      setDataLength((dataLength) => [...dataLength, ...count]);
-    };
-    length();
+      setDataLength(count);
+    });
   }, []);
 
   useEffect(() => {
-    // eslint-disable-next-line no-unused-expressions,no-debugger
+    // eslint-disable-next-line no-unused-expressions
     ticket != null &&
       getTicket().then((data) => {
-        setQue(data[ticket].questions);
+        setQuestion(data[ticket].questions);
       });
-    return setQue([]);
+    return setQuestion([]);
   }, [ticket]);
 
   const updateTicket = (value) => {
@@ -53,7 +49,7 @@ const App = () => {
   };
 
   // eslint-disable-next-line camelcase
-  const questions = que.map(({ que_title }) => que_title);
+  const questions = question.map(({ que_title }) => que_title);
 
   const allQuestions = questions.length;
 
@@ -61,8 +57,8 @@ const App = () => {
     setResultQuestion((prevState) => [
       ...prevState,
       {
-        id: que[numQuestion].idQuestion,
-        question: que[numQuestion].que_title,
+        id: question[numQuestion].idQuestion,
+        question: question[numQuestion].que_title,
         result: response,
       },
     ]);
@@ -77,8 +73,8 @@ const App = () => {
     setNumQuestion(0);
   };
 
-  const showResult = numQuestion >= que.length && que.length !== 0;
-  const showQuestion = numQuestion < que.length;
+  const showResult = numQuestion >= question.length && question.length !== 0;
+  const showQuestion = numQuestion < question.length;
 
   return (
     <>
@@ -95,7 +91,7 @@ const App = () => {
             </Title>
 
             <QuizTable>
-              {numQuestion !== que.length && (
+              {numQuestion !== question.length && (
                 <CounterQuestionStyle>
                   {showQuestion ? numQuestion + 1 : numQuestion} из{' '}
                   {allQuestions}
@@ -103,7 +99,7 @@ const App = () => {
               )}
               {showQuestion && (
                 <Question
-                  data={que}
+                  data={question}
                   userResponse={userResponse}
                   updateNumberQue={updateNumberQue}
                 />
