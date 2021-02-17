@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as actions from '../../store/actions/actions';
+
 import { IconStyle, ListStyle } from './StyledComponents';
 
 const QuizResults = ({ resultQuestion, resetResult }) => {
@@ -55,17 +53,4 @@ const QuizResults = ({ resultQuestion, resetResult }) => {
   );
 };
 
-const mapStateToProps = ({ resultQuestion }) => {
-  return {
-    resultQuestion,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  const { resetResult } = bindActionCreators(actions, dispatch);
-  return {
-    resetResult,
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(QuizResults);
+export default QuizResults;

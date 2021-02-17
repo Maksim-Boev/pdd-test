@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import Answer from '../Answer';
 
-const AnswerList = ({ count, data }) => {
-  const dataWithCount = data.length !== 0 && data[count];
-
-  const question = dataWithCount.que_title;
-  const { idQuestion } = dataWithCount;
-  const { rightAnswer } = dataWithCount;
+const AnswerList = ({ data, onIncNumQuestion, numQuestion, userResponse }) => {
+  const dataWithCount = data.length !== 0 && data[numQuestion];
   // eslint-disable-next-line camelcase
   const { que_answers } = dataWithCount;
 
@@ -23,15 +18,16 @@ const AnswerList = ({ count, data }) => {
     que_answers.map(({ answer, id }) => {
       return (
         <Answer
-          id={id}
-          idQuestion={idQuestion}
           key={id}
-          lengthQuiz={data.length}
-          question={question}
+          id={id}
           answer={answer}
-          rightAnswer={rightAnswer}
+          data={dataWithCount}
+          lengthQuiz={data.length}
           onPressing={onPressing}
           pressing={noPressing}
+          onIncNumQuestion={onIncNumQuestion}
+          numQuestion={numQuestion}
+          userResponse={userResponse}
         />
       );
     });
@@ -39,11 +35,4 @@ const AnswerList = ({ count, data }) => {
   return <>{answers}</>;
 };
 
-const mapStateToProps = ({ count, resultQuestion }) => {
-  return {
-    count,
-    resultQuestion,
-  };
-};
-
-export default connect(mapStateToProps)(AnswerList);
+export default AnswerList;

@@ -25,10 +25,17 @@ const Drawer = ({ updateTicket, dataLength }) => {
   // eslint-disable-next-line no-shadow
   const link = dataLength.map((link, index) => {
     const id = index;
-    const onActive = () => {
+    // const onActive = () => {
+    //   setIdActive(index);
+    //   onToggle();
+    // };
+    // const onUpdate = () => {
+    //   setTicket(index);
+    // };
+
+    const onClick = () => {
       setIdActive(index);
-    };
-    const onUpdate = () => {
+      onToggle();
       setTicket(index);
     };
     return (
@@ -36,8 +43,7 @@ const Drawer = ({ updateTicket, dataLength }) => {
         active={isActive(idActive, index)}
         key={id}
         index={index}
-        onUpdate={onUpdate}
-        onActive={onActive}
+        onClick={onClick}
       />
     );
   });
