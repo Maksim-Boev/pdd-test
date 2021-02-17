@@ -10,9 +10,13 @@ import { Container, QuizTable, Title } from './StyledComponents';
 import { CounterQuestionStyle } from './components/Question/StyledComponents';
 
 const App = () => {
+  const [questionsData, setQuestionsData] = useState([]);
+  const [isTicketsShown, setIsTicketsShown] = useState(true);
   const [ticket, setTicket] = useState(null);
   const [question, setQuestion] = useState([]);
   const [start, setStart] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+
   const [dataLength, setDataLength] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [numQuestion, setNumQuestion] = useState(0);
@@ -20,22 +24,25 @@ const App = () => {
 
   useEffect(() => {
     getTicket().then((data) => {
-      const count = [];
+      const tempData = [];
       data.forEach((item, index) => {
-        count.push(index);
+        tempData.push({
+          id: index + 1,
+          questions: item.questions,
+        });
       });
-      setDataLength(count);
+      setQuestionsData(tempData);
     });
   }, []);
 
-  useEffect(() => {
-    // eslint-disable-next-line no-unused-expressions
-    ticket != null &&
-      getTicket().then((data) => {
-        setQuestion(data[ticket].questions);
-      });
-    return setQuestion([]);
-  }, [ticket]);
+  // useEffect(() => {
+  //   // eslint-disable-next-line no-unused-expressions
+  //   ticket != null &&
+  //     getTicket().then((data) => {
+  //       setQuestion(data[ticket].questions);
+  //     });
+  //   return setQuestion([]);
+  // }, [ticket]);
 
   const updateTicket = (value) => {
     setTicket(value);
@@ -75,22 +82,32 @@ const App = () => {
   const showResult = numQuestion >= question.length && question.length !== 0;
   const showQuestion = numQuestion < question.length;
 
+  const onTicketChoose = (ticketData) => {
+    setTicket(ticketData);
+    setIsTicketsShown(false);
+  };
   return (
     <>
       <Container>
-        <Drawer updateTicket={updateTicket} dataLength={dataLength} />
+        {isTicketsShown && <h1>Выберите билет</h1>}
+        {isTicketsShown &&
+          questionsData.length &&
+          questionsData.map((el) => (
+            <h2 onClick={() => onTicketChoose(el)} key={el.id.toString()}>
+              Ticket {el.id}
+            </h2>
+          ))}
+        {!!ticket && <StartBtn start={start} onClick={onStart} />}
 
-        <StartBtn ticket={ticket} start={start} onClick={onStart} />
-
-        {start && ticket != null ? (
+        {start && !!ticket && !isTicketsShown ? (
           <>
             <Title>
               {showQuestion && <Timer />}
-              {showResult ? 'Ваш результат' : 'Ответьте на вопрос'}
+              {/*{showResult ? 'Ваш результат' : 'Ответьте на вопрос'}*/}
             </Title>
 
             <QuizTable>
-              {numQuestion !== question.length && (
+              {start && (
                 <CounterQuestionStyle>
                   {showQuestion ? numQuestion + 1 : numQuestion} из{' '}
                   {allQuestions}
@@ -104,16 +121,16 @@ const App = () => {
                 />
               )}
 
-              {showResult && (
-                <QuizResults
-                  resultQuestion={resultQuestion}
-                  resetResult={resetResult}
-                />
-              )}
+              {/*{showResult && (*/}
+              {/*  <QuizResults*/}
+              {/*    resultQuestion={resultQuestion}*/}
+              {/*    resetResult={resetResult}*/}
+              {/*  />*/}
+              {/*)}*/}
             </QuizTable>
           </>
         ) : (
-          <h1>Выберите билет</h1>
+          <p />
         )}
       </Container>
     </>
