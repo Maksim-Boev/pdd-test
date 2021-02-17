@@ -1,43 +1,18 @@
-import React, { useState } from 'react';
-import { QuestionUl, DivStyle, QuestionStyle } from './StyledComponents';
-import AnswerList from '../AnswerList';
+import React from 'react';
+import { Header, Title, Wrapper } from './StyledComponents';
+import Answers from '../Answers';
 
-const Question = ({ data, userResponse, updateNumberQue }) => {
-  // const [numQuestion, setNumQuestion] = useState(0);
-  // updateNumberQue(numQuestion);
-  // // eslint-disable-next-line camelcase
-  // const questions = data.map(({ que_title }) => que_title);
-  // const question = questions[numQuestion];
-  //
-  // // eslint-disable-next-line no-shadow
-  // const urlImg = data.map(({ urlImg }) => urlImg);
-  // const img = urlImg[numQuestion];
-  //
-  // const onIncNumQuestion = () => {
-  //   setNumQuestion(numQuestion + 1);
-  // };
-  //
-  // const show = numQuestion < data.length;
-
-  console.log(data);
-  return (
-    !!data && (
-      <>
-        <QuestionUl>
-          <DivStyle>
-            {/*<img style={{ width: '100%' }} src={data.urlImg} alt="img" />*/}
-            <QuestionStyle>{data.que_title}</QuestionStyle>
-          </DivStyle>
-        </QuestionUl>
-        <AnswerList
-          data={data}
-          // onIncNumQuestion={onIncNumQuestion}
-          // numQuestion={numQuestion}
-          // userResponse={userResponse}
-        />
-      </>
-    )
+const Question = ({ data, setAnswers }) =>
+  !!data && (
+    <>
+      <Wrapper>
+        <Header>
+          <img style={{ width: '100%' }} src={data.urlImg} alt="img" />
+          <Title>{data.que_title}</Title>
+        </Header>
+      </Wrapper>
+      <Answers data={data} setAnswers={setAnswers} />
+    </>
   );
-};
 
 export default Question;

@@ -15,10 +15,10 @@ const App = () => {
   const [ticket, setTicket] = useState(null);
   const [question, setQuestion] = useState(null);
   const [start, setStart] = useState(false);
-  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [userAnswers, setUserAnswers] = useState([]);
 
+  const [currentQuestion, setCurrentQuestion] = useState(null);
   const [dataLength, setDataLength] = useState([]);
-  // eslint-disable-next-line no-unused-vars
   const [numQuestion, setNumQuestion] = useState(0);
   const [resultQuestion, setResultQuestion] = useState([]);
 
@@ -60,25 +60,25 @@ const App = () => {
 
   // const allQuestions = questions.length;
 
-  const userResponse = (response) => {
-    setResultQuestion((prevState) => [
-      ...prevState,
-      {
-        id: question[numQuestion].idQuestion,
-        question: question[numQuestion].que_title,
-        result: response,
-      },
-    ]);
-  };
-
-  const updateNumberQue = (value) => {
-    setNumQuestion(value);
-  };
-
-  const resetResult = () => {
-    setResultQuestion([]);
-    setNumQuestion(0);
-  };
+  // const userResponse = (response) => {
+  //   setResultQuestion((prevState) => [
+  //     ...prevState,
+  //     {
+  //       id: question[numQuestion].idQuestion,
+  //       question: question[numQuestion].que_title,
+  //       result: response,
+  //     },
+  //   ]);
+  // };
+  //
+  // const updateNumberQue = (value) => {
+  //   setNumQuestion(value);
+  // };
+  //
+  // const resetResult = () => {
+  //   setResultQuestion([]);
+  //   setNumQuestion(0);
+  // };
 
   // const showResult = numQuestion >= question.length && question.length !== 0;
   // const showQuestion = numQuestion < question.length;
@@ -88,6 +88,8 @@ const App = () => {
     setQuestion(ticketData.questions[0]); // TODO set in map
     setIsTicketsShown(false);
   };
+
+  const onUserAnswer = (id) => console.log(id);
 
   console.log(start);
   return (
@@ -119,6 +121,7 @@ const App = () => {
               {start && (
                 <Question
                   data={question}
+                  setAnswers={onUserAnswer}
                   // userResponse={userResponse}
                   // updateNumberQue={updateNumberQue}
                 />
