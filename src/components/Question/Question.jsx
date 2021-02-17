@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { QuestionUl, DivStyle, QuestionStyle } from './StyledComponents';
 import AnswerList from '../AnswerList';
 
-const Question = ({ data, userResponse, numberQue }) => {
+const Question = ({ data, userResponse, updateNumberQue }) => {
   const [numQuestion, setNumQuestion] = useState(0);
-  numberQue(numQuestion);
+  updateNumberQue(numQuestion);
   // eslint-disable-next-line camelcase
   const questions = data.map(({ que_title }) => que_title);
   const question = questions[numQuestion];

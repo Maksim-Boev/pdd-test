@@ -4,7 +4,7 @@ import Question from './components/Question';
 import QuizResults from './components/QuizResults';
 import Timer from './components/Timer';
 import Drawer from './components/Drawer';
-import { getTicket } from './service/service';
+import { getTicket } from './service';
 import StartBtn from './components/StartBtn';
 import { Container, QuizTable, Title } from './StyledComponents';
 import { CounterQuestionStyle } from './components/Question/StyledComponents';
@@ -21,7 +21,16 @@ const App = () => {
   useEffect(() => {
     // eslint-disable-next-line no-shadow
     const count = [];
-    (async function () {
+    // (async function getLength() {
+    //   await getTicket().then((data) => {
+    //     data.forEach((item, index) => {
+    //       count.push(index);
+    //     });
+    //   });
+    //   // eslint-disable-next-line no-shadow
+    //   setDataLength((dataLength) => [...dataLength, ...count]);
+    // })();
+    const length = async () => {
       await getTicket().then((data) => {
         data.forEach((item, index) => {
           count.push(index);
@@ -29,7 +38,8 @@ const App = () => {
       });
       // eslint-disable-next-line no-shadow
       setDataLength((dataLength) => [...dataLength, ...count]);
-    })();
+    };
+    length();
   }, []);
 
   useEffect(() => {
@@ -76,6 +86,9 @@ const App = () => {
     setNumQuestion(0);
   };
 
+  const showResult = numQuestion >= que.length && que.length !== 0;
+  const showQuestion = numQuestion < que.length;
+
   return (
     <>
       <Container>
@@ -86,28 +99,26 @@ const App = () => {
         {start && ticket != null ? (
           <>
             <Title>
-              {numQuestion < que.length && <Timer />}
-              {numQuestion >= que.length
-                ? 'Ваш результат'
-                : 'Ответьте на вопрос'}
+              {showQuestion && <Timer />}
+              {showResult ? 'Ваш результат' : 'Ответьте на вопрос'}
             </Title>
 
             <QuizTable>
               {numQuestion !== que.length && (
                 <CounterQuestionStyle>
-                  {numQuestion < que.length ? numQuestion + 1 : numQuestion} из{' '}
+                  {showQuestion ? numQuestion + 1 : numQuestion} из{' '}
                   {allQuestions}
                 </CounterQuestionStyle>
               )}
-              {numQuestion < que.length && (
+              {showQuestion && (
                 <Question
                   data={que}
                   userResponse={userResponse}
-                  numberQue={updateNumberQue}
+                  updateNumberQue={updateNumberQue}
                 />
               )}
 
-              {numQuestion >= que.length && (
+              {showResult && (
                 <QuizResults
                   resultQuestion={resultQuestion}
                   resetResult={resetResult}
