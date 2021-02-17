@@ -1,9 +1,13 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const StartBtnStyle = styled.button`
+export const StartButton = styled.button`
   height: 40px;
   margin-top: 10px;
   width: 200px;
   border-radius: 10px;
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      pointer-events: none;
+    `}
 `;
-export default StartBtnStyle;

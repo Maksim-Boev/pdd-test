@@ -1,10 +1,10 @@
 import React from 'react';
-import StartBtnStyle from './StyledComponents';
+import { StartButton } from './StyledComponents';
 
-const StartBtn = ({ start = false, onClick }) => (
-  <StartBtnStyle onClick={onClick}>
-    {start ? 'End test' : 'Start test'}
-  </StartBtnStyle>
+const StartBtn = ({ disabled = false, onClick }) => (
+  <StartButton onClick={onClick} disabled={disabled}>
+    Start test
+  </StartButton>
 );
 
 export default StartBtn;

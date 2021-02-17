@@ -11,12 +11,17 @@ export const Header = styled.div`
   align-items: center;
 `;
 
-export const CounterQuestionStyle = styled.div`
-  min-width: 60px;
-  display: flex;
-  justify-content: flex-end;
-`;
-
 export const Title = styled.p`
   margin: 10px 0;
+`;
+
+export const Image = styled.img`
+  width: 100%;
+`;
+
+export const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
 `;
