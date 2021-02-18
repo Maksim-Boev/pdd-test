@@ -33,12 +33,12 @@ const Answer = ({
         setMarkerAnswer(true);
         userResponse(true);
 
-        timeoutResetMarkerAnswer(1000);
+        timeoutResetMarkerAnswer(700);
         clearTimeout(timeoutResetMarkerAnswer);
       } else {
         setMarkerAnswer(false);
         userResponse(false);
-        timeoutResetMarkerAnswer(1000);
+        timeoutResetMarkerAnswer(700);
         clearTimeout(timeoutResetMarkerAnswer);
       }
     }

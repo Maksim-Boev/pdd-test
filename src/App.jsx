@@ -23,7 +23,6 @@ const App = () => {
       const count = [];
       data.forEach((item, index) => {
         count.push(index);
-        console.log(count);
       });
       setDataLength(count);
     });
@@ -76,12 +75,14 @@ const App = () => {
   const showResult = numQuestion >= question.length && question.length !== 0;
   const showQuestion = numQuestion < question.length;
 
+  console.log(typeof ticket === 'number');
+
   return (
     <>
       <Container>
         <Drawer updateTicket={updateTicket} dataLength={dataLength} />
 
-        <StartBtn ticket={ticket} start={start} onClick={onStart} />
+        {ticket != null && <StartBtn start={start} onClick={onStart} />}
 
         {start && ticket != null ? (
           <>
