@@ -13,7 +13,7 @@ const LiStyle = styled.li`
     }
     // eslint-disable-next-line consistent-return
     return trueAnswer
-      ? 'background-color: rgb(49 63 246 / 50%)'
+      ? 'background-color: rgb(32 199 26 / 50%)'
       : 'background-color: rgb(233 30 99 / 50%)';
   }};
 

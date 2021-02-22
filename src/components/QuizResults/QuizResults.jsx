@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { IconStyle, ListStyle } from './StyledComponents';
+import { ResultItem, ResultIcon, ListResults } from './StyledComponents';
 
 const QuizResults = ({ resultQuestion, resetResult }) => {
   const allCorrectAnswerToQuestions = () => {
@@ -17,21 +17,20 @@ const QuizResults = ({ resultQuestion, resetResult }) => {
 
   useEffect(() => {
     resultQuestion.forEach(({ result }) => {
-      // eslint-disable-next-line no-unused-expressions,no-shadow
-      result === false && setWrongAnswers((wrongAns) => wrongAns + 1);
+      // eslint-disable-next-line no-unused-expressions
+      result === false && setWrongAnswers((wrongAnswer) => wrongAnswer + 1);
     });
   }, []);
 
-  // eslint-disable-next-line no-shadow
-  const result = resultQuestion.map(({ id, question, result }) => {
+  const resultItem = resultQuestion.map(({ id, question, result }) => {
     return (
-      <ListStyle key={id}>
+      <ResultItem key={id}>
         {id}. {question}
-        <IconStyle
+        <ResultIcon
           result={+result}
           className={result ? 'fa fa-check' : 'fa fa-times'}
         />
-      </ListStyle>
+      </ResultItem>
     );
   });
 
@@ -43,12 +42,14 @@ const QuizResults = ({ resultQuestion, resetResult }) => {
         <h1>Поздравляем, вы прошли тест</h1>
       )}
       <br />
-      <ul style={{ padding: '0' }}>{result}</ul>
+      <ListResults>{resultItem}</ListResults>
       <p>
         Правильно {allCorrectAnswerToQuestions()} из {resultQuestion.length}
       </p>
-      {/* eslint-disable-next-line react/button-has-type */}
-      <button onClick={resetResult}>Повторить</button>
+
+      <button type="button" onClick={resetResult}>
+        Повторить
+      </button>
     </div>
   );
 };

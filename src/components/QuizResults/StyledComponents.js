@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 
-const ListStyle = styled.li`
+export const ResultItem = styled.li`
   list-style: none;
   padding-bottom: 10px;
 `;
-const IconStyle = styled.i`
+export const ResultIcon = styled.i`
   margin-left: 10px;
   ${({ result }) => {
     return result ? 'color: green' : 'color: red';
   }}
 `;
 
-export { ListStyle, IconStyle };
+export const ListResults = styled.ul`
+  padding: '0';
+`;
