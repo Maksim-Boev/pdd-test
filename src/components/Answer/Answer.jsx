@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import LiStyle from './StyledComponent';
+import AnswerItem from './StyledComponent';
 
 const Answer = ({
   id,
@@ -28,7 +28,6 @@ const Answer = ({
       if (correctAnswer) {
         setMarkerAnswer(true);
         userResponse(true);
-
         timeoutResetMarkerAnswer(700);
         clearTimeout(timeoutResetMarkerAnswer);
       } else {
@@ -42,9 +41,9 @@ const Answer = ({
 
   return (
     <>
-      <LiStyle trueAnswer={markerAnswer} onClick={onAnswerClick}>
+      <AnswerItem trueAnswer={markerAnswer} onClick={onAnswerClick}>
         {answer}
-      </LiStyle>
+      </AnswerItem>
     </>
   );
 };

@@ -7,7 +7,7 @@ const Container = styled.div`
   width: 100%;
   background: linear-gradient(90deg, #5041d2 0%, #7969e6 100%);
   height: 100vh;
-  padding: 0 100px;
+  padding: 0 15%;
 `;
 
 const Title = styled.h1`
@@ -25,4 +25,10 @@ const QuizTable = styled.ul`
   color: #fff;
 `;
 
-export { QuizTable, Title, Container };
+const CurrentQuestion = styled.div`
+  min-width: 60px;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export { QuizTable, Title, Container, CurrentQuestion };

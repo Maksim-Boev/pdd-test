@@ -1,18 +1,17 @@
 import React from 'react';
-import { QuestionUl, DivStyle, QuestionStyle } from './StyledComponents';
+import { Wrapper, TextQuestion, Img } from './StyledComponents';
 import AnswerList from '../AnswerList';
 
 const Question = ({ data, userResponse, nextQuestion }) => {
   return (
     <>
-      <QuestionUl>
-        <DivStyle>
-          {data.urlImg !== undefined && data.urlImg.length !== 0 && (
-            <img style={{ width: '100%' }} src={data.urlImg} alt="img" />
-          )}
-          <QuestionStyle>{data.que_title}</QuestionStyle>
-        </DivStyle>
-      </QuestionUl>
+      <Wrapper>
+        {data.urlImg !== undefined && data.urlImg.length !== 0 && (
+          <Img src={data.urlImg} alt="img" />
+        )}
+        <TextQuestion>{data.que_title}</TextQuestion>
+      </Wrapper>
+
       <AnswerList
         data={data}
         nextQuestion={nextQuestion}

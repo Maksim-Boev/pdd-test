@@ -6,16 +6,19 @@ import Timer from './components/Timer';
 import Drawer from './components/Drawer';
 import { getTicket } from './service';
 import StartBtn from './components/StartBtn';
-import { Container, QuizTable, Title } from './StyledComponents';
-import { CounterQuestionStyle } from './components/Question/StyledComponents';
+import {
+  Container,
+  CurrentQuestion,
+  QuizTable,
+  Title,
+} from './StyledComponents';
 
 const App = () => {
   const [ticketNumber, setTicketNumber] = useState(null);
   const [question, setQuestion] = useState([]);
-  const [start, setStart] = useState(false);
+  const [startTest, setStartTest] = useState(false);
   const [ticketList, setTicketList] = useState([]);
-  // eslint-disable-next-line no-unused-vars
-  const [numberQuestion, setNumberQuestion] = useState(0);
+  const [numberQuestion, setNumberQuestion] = useState(null);
   const [resultQuestion, setResultQuestion] = useState([]);
 
   useEffect(() => {
@@ -42,7 +45,7 @@ const App = () => {
   };
 
   const onStart = () => {
-    setStart(!start);
+    setStartTest(!startTest);
     setResultQuestion([]);
     setNumberQuestion(0);
   };
@@ -78,9 +81,11 @@ const App = () => {
           ticketList={ticketList}
         />
 
-        {ticketNumber != null && <StartBtn start={start} onClick={onStart} />}
+        {ticketNumber != null && (
+          <StartBtn start={startTest} onClick={onStart} />
+        )}
 
-        {start && ticketNumber != null ? (
+        {startTest && ticketNumber != null ? (
           <>
             <Title>
               {showQuestion && <Timer />}
@@ -89,10 +94,9 @@ const App = () => {
 
             <QuizTable>
               {numberQuestion !== question.length && (
-                <CounterQuestionStyle>
-                  {showQuestion ? numberQuestion + 1 : numberQuestion} из{' '}
-                  {question.length}
-                </CounterQuestionStyle>
+                <CurrentQuestion>
+                  {numberQuestion + 1} из {question.length}
+                </CurrentQuestion>
               )}
               {showQuestion &&
                 question.map(

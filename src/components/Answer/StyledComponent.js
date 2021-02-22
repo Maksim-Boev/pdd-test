@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const LiStyle = styled.li`
+const AnswerItem = styled.li`
   list-style: none;
   padding: 10px 20px;
   margin-bottom: 5px;
@@ -23,4 +23,4 @@ const LiStyle = styled.li`
   }
 `;
 
-export default LiStyle;
+export default AnswerItem;

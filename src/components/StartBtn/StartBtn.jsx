@@ -1,12 +1,8 @@
 import React from 'react';
-import StartBtnStyle from './StyledComponents';
+import Start from './StyledComponents';
 
 const StartBtn = ({ start = false, onClick }) => {
-  return (
-    <StartBtnStyle onClick={onClick}>
-      {start ? 'End test' : 'Start test'}
-    </StartBtnStyle>
-  );
+  return <Start onClick={onClick}>{start ? 'End test' : 'Start test'}</Start>;
 };
 
 export default StartBtn;
