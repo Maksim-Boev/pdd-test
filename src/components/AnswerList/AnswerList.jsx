@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import Answer from '../Answer';
 
-const AnswerList = ({ data, onIncNumQuestion, numQuestion, userResponse }) => {
-  const dataWithCount = data.length !== 0 && data[numQuestion];
-  // eslint-disable-next-line camelcase
-  const { que_answers } = dataWithCount;
-
+const AnswerList = ({ data, nextQuestion, userResponse }) => {
   const [noPressing, setNoPressing] = useState(false);
 
   const onPressing = (value) => {
@@ -13,20 +9,17 @@ const AnswerList = ({ data, onIncNumQuestion, numQuestion, userResponse }) => {
   };
 
   const answers =
-    // eslint-disable-next-line camelcase
-    que_answers &&
-    que_answers.map(({ answer, id }) => {
+    data.que_answers &&
+    data.que_answers.map(({ answer, id }) => {
       return (
         <Answer
           key={id}
           id={id}
           answer={answer}
-          data={dataWithCount}
-          lengthQuiz={data.length}
+          rightAnswer={data.rightAnswer}
           onPressing={onPressing}
           pressing={noPressing}
-          onIncNumQuestion={onIncNumQuestion}
-          numQuestion={numQuestion}
+          nextQuestion={nextQuestion}
           userResponse={userResponse}
         />
       );

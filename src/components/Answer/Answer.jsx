@@ -4,32 +4,28 @@ import LiStyle from './StyledComponent';
 const Answer = ({
   id,
   answer,
-  data,
-  numQuestion,
-  onIncNumQuestion,
+  rightAnswer,
+  nextQuestion,
   onPressing,
   pressing,
   userResponse,
-  lengthQuiz,
 }) => {
   const [markerAnswer, setMarkerAnswer] = useState('');
 
-  const rightAns = data.rightAnswer === id;
+  const correctAnswer = rightAnswer === id;
+
   const timeoutResetMarkerAnswer = (t) => {
     setTimeout(() => {
       onPressing(false);
       setMarkerAnswer('');
-      // eslint-disable-next-line no-unused-expressions
-      if (numQuestion <= lengthQuiz) {
-        onIncNumQuestion();
-      }
+      nextQuestion();
     }, t);
   };
 
   const onAnswerClick = () => {
     onPressing(true);
     if (pressing === false) {
-      if (rightAns) {
+      if (correctAnswer) {
         setMarkerAnswer(true);
         userResponse(true);
 

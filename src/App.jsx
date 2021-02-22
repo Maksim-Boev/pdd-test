@@ -15,7 +15,7 @@ const App = () => {
   const [start, setStart] = useState(false);
   const [ticketList, setTicketList] = useState([]);
   // eslint-disable-next-line no-unused-vars
-  const [numQuestion, setNumQuestion] = useState(0);
+  const [numberQuestion, setNumberQuestion] = useState(0);
   const [resultQuestion, setResultQuestion] = useState([]);
 
   useEffect(() => {
@@ -44,31 +44,31 @@ const App = () => {
   const onStart = () => {
     setStart(!start);
     setResultQuestion([]);
-    setNumQuestion(0);
+    setNumberQuestion(0);
   };
 
   const userResponse = (response) => {
     setResultQuestion((prevState) => [
       ...prevState,
       {
-        id: question[numQuestion].idQuestion,
-        question: question[numQuestion].que_title,
+        id: question[numberQuestion].idQuestion,
+        question: question[numberQuestion].que_title,
         result: response,
       },
     ]);
   };
 
-  const updateNumberQue = (value) => {
-    setNumQuestion(value);
+  const nextQuestion = () => {
+    setNumberQuestion(numberQuestion + 1);
   };
 
   const resetResult = () => {
     setResultQuestion([]);
-    setNumQuestion(0);
+    setNumberQuestion(0);
   };
 
-  const showResult = numQuestion >= question.length && question.length !== 0;
-  const showQuestion = numQuestion < question.length;
+  const showResult = numberQuestion >= question.length && question.length !== 0;
+  const showQuestion = numberQuestion < question.length;
 
   return (
     <>
@@ -88,19 +88,25 @@ const App = () => {
             </Title>
 
             <QuizTable>
-              {numQuestion !== question.length && (
+              {numberQuestion !== question.length && (
                 <CounterQuestionStyle>
-                  {showQuestion ? numQuestion + 1 : numQuestion} из{' '}
+                  {showQuestion ? numberQuestion + 1 : numberQuestion} из{' '}
                   {question.length}
                 </CounterQuestionStyle>
               )}
-              {showQuestion && (
-                <Question
-                  data={question}
-                  userResponse={userResponse}
-                  updateNumberQue={updateNumberQue}
-                />
-              )}
+              {showQuestion &&
+                question.map(
+                  (data, index) =>
+                    numberQuestion === index && (
+                      <Question
+                        key={+index}
+                        data={data}
+                        userResponse={userResponse}
+                        numberQuestion={numberQuestion}
+                        nextQuestion={nextQuestion}
+                      />
+                    )
+                )}
 
               {showResult && (
                 <QuizResults
