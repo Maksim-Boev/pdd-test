@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import TicketItem from '../TicketItem';
-import { TicketList, Backdrop, MenuToggle } from './StyledComponents';
+import {
+  TicketList,
+  Backdrop,
+  MenuToggle,
+  TicketLiStyle,
+} from './StyledComponents';
 
 const Drawer = ({ updateTicketNumber, ticketList }) => {
   const [ticketNumber, setTicketNumber] = useState(null);
@@ -24,12 +28,13 @@ const Drawer = ({ updateTicketNumber, ticketList }) => {
       setTicketNumber(index);
     };
     return (
-      <TicketItem
-        active={isActive(ticketNumber, index)}
+      <TicketLiStyle
         key={+index}
-        index={index}
+        ticketMarker={isActive(ticketNumber, index)}
         onClick={onClick}
-      />
+      >
+        Ticket {index + 1}
+      </TicketLiStyle>
     );
   });
 

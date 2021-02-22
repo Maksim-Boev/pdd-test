@@ -38,3 +38,13 @@ export const MenuToggle = styled.i`
     opacity: 0.7;
   }
 `;
+
+export const TicketLiStyle = styled.li`
+  list-style: none;
+  margin-top: 10px;
+  margin-left: 20px;
+  cursor: pointer;
+  ${({ ticketMarker }) => {
+    return ticketMarker ? 'color: red' : 'color: black';
+  }}
+`;
