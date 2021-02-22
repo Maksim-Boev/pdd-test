@@ -8,11 +8,6 @@ const TicketItem = ({ index, active, onClick }) => {
     setTicketMarker(active);
   }, [active]);
 
-  // const onClick = () => {
-  //   onActive();
-  //   onUpdate();
-  // };
-
   return (
     <TicketLiStyle ticketMarker={ticketMarker} onClick={onClick}>
       Ticket {index + 1}

@@ -1,47 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import MenuToggle from '../MenuToggle';
-import Backdrop from '../Backdrop';
 import TicketItem from '../TicketItem';
-import UlStyle from './StyledComponents';
+import { TicketList, Backdrop, MenuToggle } from './StyledComponents';
 
-const Drawer = ({ updateTicket, dataLength }) => {
-  const [ticket, setTicket] = useState(null);
-  const [idActive, setIdActive] = useState(null);
+const Drawer = ({ updateTicketNumber, ticketList }) => {
+  const [ticketNumber, setTicketNumber] = useState(null);
   const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
-    updateTicket(ticket);
-  }, [ticket]);
+    updateTicketNumber(ticketNumber);
+  }, [ticketNumber]);
 
   const onToggle = () => {
     setToggle(!toggle);
   };
 
-  // eslint-disable-next-line no-shadow
-  const isActive = (idActive = null, index) => {
-    return idActive === index;
+  const isActive = (id = null, index) => {
+    return id === index;
   };
 
-  // eslint-disable-next-line no-shadow
-  const link = dataLength.map((link, index) => {
-    const id = index;
-    // const onActive = () => {
-    //   setIdActive(index);
-    //   onToggle();
-    // };
-    // const onUpdate = () => {
-    //   setTicket(index);
-    // };
-
+  const link = ticketList.map((index) => {
     const onClick = () => {
-      setIdActive(index);
       onToggle();
-      setTicket(index);
+      setTicketNumber(index);
     };
     return (
       <TicketItem
-        active={isActive(idActive, index)}
-        key={id}
+        active={isActive(ticketNumber, index)}
+        key={+index}
         index={index}
         onClick={onClick}
       />
@@ -51,10 +36,14 @@ const Drawer = ({ updateTicket, dataLength }) => {
   return (
     <>
       <div>
-        <MenuToggle onToggle={onToggle} isOpen={toggle} />
-        <UlStyle open={toggle}>{link}</UlStyle>
+        <MenuToggle
+          open={toggle}
+          onClick={onToggle}
+          className={toggle ? 'fa fa-times' : 'fa fa-bars'}
+        />
+        <TicketList open={toggle}>{link}</TicketList>
       </div>
-      {toggle && <Backdrop onClose={onToggle} />}
+      {toggle && <Backdrop onClick={onToggle} />}
     </>
   );
 };

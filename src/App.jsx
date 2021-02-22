@@ -10,35 +10,35 @@ import { Container, QuizTable, Title } from './StyledComponents';
 import { CounterQuestionStyle } from './components/Question/StyledComponents';
 
 const App = () => {
-  const [ticket, setTicket] = useState(null);
+  const [ticketNumber, setTicketNumber] = useState(null);
   const [question, setQuestion] = useState([]);
   const [start, setStart] = useState(false);
-  const [dataLength, setDataLength] = useState([]);
+  const [ticketList, setTicketList] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [numQuestion, setNumQuestion] = useState(0);
   const [resultQuestion, setResultQuestion] = useState([]);
 
   useEffect(() => {
-    getTicket().then((data) => {
-      const count = [];
-      data.forEach((item, index) => {
-        count.push(index);
-      });
-      setDataLength(count);
-    });
-  }, []);
+    const getData = (numberTicket) => {
+      if (numberTicket != null) {
+        getTicket().then((data) => {
+          setQuestion(data[numberTicket].questions);
+        });
+      } else {
+        getTicket().then((data) => {
+          const tempTicketList = [];
+          data.forEach((item, index) => {
+            tempTicketList.push(index);
+          });
+          setTicketList(tempTicketList);
+        });
+      }
+    };
+    getData(ticketNumber);
+  }, [ticketNumber]);
 
-  useEffect(() => {
-    // eslint-disable-next-line no-unused-expressions
-    ticket != null &&
-      getTicket().then((data) => {
-        setQuestion(data[ticket].questions);
-      });
-    return setQuestion([]);
-  }, [ticket]);
-
-  const updateTicket = (value) => {
-    setTicket(value);
+  const updateTicketNumber = (value) => {
+    setTicketNumber(value);
   };
 
   const onStart = () => {
@@ -46,11 +46,6 @@ const App = () => {
     setResultQuestion([]);
     setNumQuestion(0);
   };
-
-  // eslint-disable-next-line camelcase
-  const questions = question.map(({ que_title }) => que_title);
-
-  const allQuestions = questions.length;
 
   const userResponse = (response) => {
     setResultQuestion((prevState) => [
@@ -75,16 +70,17 @@ const App = () => {
   const showResult = numQuestion >= question.length && question.length !== 0;
   const showQuestion = numQuestion < question.length;
 
-  console.log(typeof ticket === 'number');
-
   return (
     <>
       <Container>
-        <Drawer updateTicket={updateTicket} dataLength={dataLength} />
+        <Drawer
+          updateTicketNumber={updateTicketNumber}
+          ticketList={ticketList}
+        />
 
-        {ticket != null && <StartBtn start={start} onClick={onStart} />}
+        {ticketNumber != null && <StartBtn start={start} onClick={onStart} />}
 
-        {start && ticket != null ? (
+        {start && ticketNumber != null ? (
           <>
             <Title>
               {showQuestion && <Timer />}
@@ -95,7 +91,7 @@ const App = () => {
               {numQuestion !== question.length && (
                 <CounterQuestionStyle>
                   {showQuestion ? numQuestion + 1 : numQuestion} из{' '}
-                  {allQuestions}
+                  {question.length}
                 </CounterQuestionStyle>
               )}
               {showQuestion && (

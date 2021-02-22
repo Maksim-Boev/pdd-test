@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const UlStyle = styled.ul`
+export const TicketList = styled.ul`
   padding: 0;
   margin: 0;
   ${({ open }) => {
@@ -13,4 +13,28 @@ const UlStyle = styled.ul`
   width: 300px;
   z-index: 1;
 `;
-export default UlStyle;
+
+export const Backdrop = styled.div`
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  left: 0;
+`;
+
+export const MenuToggle = styled.i`
+  margin-top: 20px;
+  position: fixed;
+  ${({ open }) => {
+    return open ? 'left: 320px' : 'left: 40px';
+  }};
+  font-size: 20px;
+  cursor: pointer;
+  color: #fff;
+  transition: opacity, left 0.22s ease-in;
+  z-index: 100;
+
+  :hover {
+    opacity: 0.7;
+  }
+`;
