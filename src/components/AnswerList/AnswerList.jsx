@@ -1,26 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Answer from '../Answer';
 
-const AnswerList = ({ data, nextQuestion, userResponse }) => {
-  const [noPressing, setNoPressing] = useState(false);
-
-  const onPressing = (value) => {
-    setNoPressing(value);
-  };
-
+const AnswerList = ({ data, nextQuestion, userAnswer }) => {
   const answers =
     data.que_answers &&
-    data.que_answers.map(({ answer, id }) => {
+    data.que_answers.map((item, index) => {
       return (
         <Answer
-          key={id}
-          id={id}
-          answer={answer}
+          key={index.toString()}
+          data={item}
           rightAnswer={data.rightAnswer}
-          onPressing={onPressing}
-          pressing={noPressing}
           nextQuestion={nextQuestion}
-          userResponse={userResponse}
+          userAnswer={userAnswer}
         />
       );
     });

@@ -24,10 +24,10 @@ const QuizResults = ({ resultQuestion, resetResult }) => {
 
   const resultItem = resultQuestion.map(({ id, question, result }) => {
     return (
-      <ResultItem key={id}>
+      <ResultItem key={id.toString()}>
         {id}. {question}
         <ResultIcon
-          result={+result}
+          colorIcon={result}
           className={result ? 'fa fa-check' : 'fa fa-times'}
         />
       </ResultItem>

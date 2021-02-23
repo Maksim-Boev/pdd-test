@@ -6,8 +6,8 @@ export const ResultItem = styled.li`
 `;
 export const ResultIcon = styled.i`
   margin-left: 10px;
-  ${({ result }) => {
-    return result ? 'color: green' : 'color: red';
+  ${({ colorIcon }) => {
+    return colorIcon ? 'color: green' : 'color: red';
   }}
 `;
 

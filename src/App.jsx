@@ -14,16 +14,20 @@ import {
 } from './StyledComponents';
 
 const App = () => {
-  const [ticketNumber, setTicketNumber] = useState(null);
+  const [ticketNumber, setTicketNumber] = useState(false);
   const [question, setQuestion] = useState([]);
-  const [startTest, setStartTest] = useState(false);
+  const [isStartTest, setIsStartTest] = useState(false);
   const [ticketList, setTicketList] = useState([]);
   const [numberQuestion, setNumberQuestion] = useState(null);
   const [resultQuestion, setResultQuestion] = useState([]);
 
+  const isTicketNumber = typeof ticketNumber === 'number';
+  const showResult = numberQuestion >= question.length && question.length !== 0;
+  const showQuestion = numberQuestion < question.length;
+
   useEffect(() => {
     const getData = (numberTicket) => {
-      if (numberTicket != null) {
+      if (isTicketNumber) {
         getTicket().then((data) => {
           setQuestion(data[numberTicket].questions);
         });
@@ -40,29 +44,15 @@ const App = () => {
     getData(ticketNumber);
   }, [ticketNumber]);
 
-  const updateTicketNumber = (value) => {
-    setTicketNumber(value);
-  };
-
-  const onStart = () => {
-    setStartTest(!startTest);
-    setResultQuestion([]);
-    setNumberQuestion(0);
-  };
-
-  const userResponse = (response) => {
+  const userAnswer = (answer) => {
     setResultQuestion((prevState) => [
       ...prevState,
       {
         id: question[numberQuestion].idQuestion,
         question: question[numberQuestion].que_title,
-        result: response,
+        result: answer,
       },
     ]);
-  };
-
-  const nextQuestion = () => {
-    setNumberQuestion(numberQuestion + 1);
   };
 
   const resetResult = () => {
@@ -70,22 +60,29 @@ const App = () => {
     setNumberQuestion(0);
   };
 
-  const showResult = numberQuestion >= question.length && question.length !== 0;
-  const showQuestion = numberQuestion < question.length;
-
   return (
     <>
       <Container>
         <Drawer
-          updateTicketNumber={updateTicketNumber}
+          updateTicketNumber={(value) => {
+            setTicketNumber(value);
+            resetResult();
+            setIsStartTest(false);
+          }}
           ticketList={ticketList}
         />
 
-        {ticketNumber != null && (
-          <StartBtn start={startTest} onClick={onStart} />
+        {isTicketNumber && (
+          <StartBtn
+            start={isStartTest}
+            onClick={() => {
+              setIsStartTest(!isStartTest);
+              resetResult();
+            }}
+          />
         )}
 
-        {startTest && ticketNumber != null ? (
+        {isStartTest && isTicketNumber ? (
           <>
             <Title>
               {showQuestion && <Timer />}
@@ -103,11 +100,13 @@ const App = () => {
                   (data, index) =>
                     numberQuestion === index && (
                       <Question
-                        key={+index}
+                        key={index.toString()}
                         data={data}
-                        userResponse={userResponse}
+                        userAnswer={userAnswer}
                         numberQuestion={numberQuestion}
-                        nextQuestion={nextQuestion}
+                        nextQuestion={() =>
+                          setNumberQuestion(numberQuestion + 1)
+                        }
                       />
                     )
                 )}

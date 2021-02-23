@@ -7,31 +7,22 @@ import {
 } from './StyledComponents';
 
 const Drawer = ({ updateTicketNumber, ticketList }) => {
-  const [ticketNumber, setTicketNumber] = useState(null);
+  const [ticketNumber, setTicketNumber] = useState(false);
   const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
     updateTicketNumber(ticketNumber);
   }, [ticketNumber]);
 
-  const onToggle = () => {
-    setToggle(!toggle);
-  };
-
-  const isActive = (id = null, index) => {
-    return id === index;
-  };
-
   const link = ticketList.map((index) => {
-    const onClick = () => {
-      onToggle();
-      setTicketNumber(index);
-    };
     return (
       <TicketLiStyle
-        key={+index}
-        ticketMarker={isActive(ticketNumber, index)}
-        onClick={onClick}
+        key={index.toString()}
+        ticketMarker={ticketNumber === index}
+        onClick={() => {
+          setToggle(!toggle);
+          setTicketNumber(index);
+        }}
       >
         Ticket {index + 1}
       </TicketLiStyle>
@@ -43,12 +34,12 @@ const Drawer = ({ updateTicketNumber, ticketList }) => {
       <div>
         <MenuToggle
           open={toggle}
-          onClick={onToggle}
+          onClick={() => setToggle(!toggle)}
           className={toggle ? 'fa fa-times' : 'fa fa-bars'}
         />
         <TicketList open={toggle}>{link}</TicketList>
       </div>
-      {toggle && <Backdrop onClick={onToggle} />}
+      {toggle && <Backdrop onClick={() => setToggle(!toggle)} />}
     </>
   );
 };
