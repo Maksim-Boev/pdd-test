@@ -9,9 +9,10 @@ const AnswerList = ({ data, nextQuestion, userAnswer }) => {
         <Answer
           key={index.toString()}
           data={item}
-          rightAnswer={data.rightAnswer}
-          nextQuestion={nextQuestion}
-          userAnswer={userAnswer}
+          onAnswerClick={() => {
+            data.rightAnswer === item.id ? userAnswer(true) : userAnswer(false);
+            nextQuestion();
+          }}
         />
       );
     });

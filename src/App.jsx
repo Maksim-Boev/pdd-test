@@ -21,7 +21,8 @@ const App = () => {
   const [numberQuestion, setNumberQuestion] = useState(null);
   const [resultQuestion, setResultQuestion] = useState([]);
 
-  const isTicketNumber = typeof ticketNumber === 'number';
+  const isTicketNumber =
+    typeof ticketNumber === 'number' && ticketNumber <= 2 && ticketNumber > -1;
   const showResult = numberQuestion >= question.length && question.length !== 0;
   const showQuestion = numberQuestion < question.length;
 
