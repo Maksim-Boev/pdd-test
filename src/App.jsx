@@ -61,15 +61,17 @@ const App = () => {
     setNumberQuestion(0);
   };
 
+  const updateTicketNumber = (value) => {
+    setTicketNumber(value);
+    resetResult();
+    setIsStartTest(false);
+  };
+
   return (
     <>
       <Container>
         <Drawer
-          updateTicketNumber={(value) => {
-            setTicketNumber(value);
-            resetResult();
-            setIsStartTest(false);
-          }}
+          updateTicketNumber={updateTicketNumber}
           ticketList={ticketList}
         />
 

@@ -17,7 +17,6 @@ const QuizResults = ({ resultQuestion, resetResult }) => {
 
   useEffect(() => {
     resultQuestion.forEach(({ result }) => {
-      // eslint-disable-next-line no-unused-expressions
       result === false && setWrongAnswers((wrongAnswer) => wrongAnswer + 1);
     });
   }, []);

@@ -5,14 +5,15 @@ const AnswerList = ({ data, nextQuestion, userAnswer }) => {
   const answers =
     data.que_answers &&
     data.que_answers.map((item, index) => {
+      const onSetUserAnswer = () => {
+        userAnswer(data.rightAnswer === item.id);
+        nextQuestion();
+      };
       return (
         <Answer
           key={index.toString()}
           data={item}
-          onAnswerClick={() => {
-            data.rightAnswer === item.id ? userAnswer(true) : userAnswer(false);
-            nextQuestion();
-          }}
+          onSetUserAnswer={onSetUserAnswer}
         />
       );
     });
